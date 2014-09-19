@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'woodwing_elvis/version'
+require 'woodwing/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "woodwing_elvis"
-  spec.version       = Woodwing::Elvis::VERSION
+  spec.version       = WoodWing::VERSION
   spec.authors       = ["Dewayne VanHoozer"]
   spec.email         = ["dvanhoozer@gmail.com"]
   spec.summary       = %q{A Ruby implementation of Woodwing's Elvis API}

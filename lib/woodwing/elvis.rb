@@ -4,6 +4,7 @@
 ##  Desc: REST API definitions for WoodWing's Elvis
 #
 
+require_relative 'elvis/utilities'
 require_relative 'elvis/rest'
 require_relative 'elvis/soap'
 

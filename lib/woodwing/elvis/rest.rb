@@ -4,16 +4,11 @@
 ##  Desc: REST API definitions for WoodWing's Elvis
 #
 
-require "url_safe_base64"
-require 'rest_client'
-require 'multi_json'
-
 module WoodWing
   class Elvis
 
 module Rest
 
-  require_relative 'rest/utilities'
   require_relative 'rest/authorization_keys'
   require_relative 'rest/browse'
   require_relative 'rest/checkout'
