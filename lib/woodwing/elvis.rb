@@ -74,24 +74,28 @@ class Elvis
 
     response = RestClient.get(url, { params: options, cookies: @cookies })
 
-if $DEBUG
-    debug_me(){[:url, :options, :response ]}
-    debug_me(){[ 'response.code', 'response.cookies', 'response.body' ]}
-end
+    if $DEBUG
+        debug_me(){[:url, :options, :response ]}
+        debug_me(){[ 'response.code', 'response.cookies', 'response.body' ]}
+    end
 
     @cookies = response.cookies unless response.cookies.empty?
 
-    response = MultiJson.load(  response.body,
-                                :symbolize_keys => true)
+    begin
+      response = MultiJson.load(response.body, :symbolize_keys => true)
 
-    if response.include?(:errorcode)
-      if 401 == response[:errorcode]     &&
-        response[:message].include?('ConcurrentModificationException')
-        raise ConcurrentModificationException
-      else
-        error_condition = "ERROR #{response[:errorcode]}: #{response[:message]}"
-        raise error_condition
+      if response.include?(:errorcode)
+        if 401 == response[:errorcode]     &&
+          response[:message].include?('ConcurrentModificationException')
+          raise ConcurrentModificationException
+        else
+          error_condition = "ERROR #{response[:errorcode]}: #{response[:message]}"
+          raise error_condition
+        end
       end
+    rescue MultiJson::ParseError
+      # only known normal use case: response.body is actually contents of a file, not JSON
+      response = response.body
     end
 
     return response
