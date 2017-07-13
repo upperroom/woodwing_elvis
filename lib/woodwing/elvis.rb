@@ -27,7 +27,7 @@ class Elvis
     checkout:               ["checkout",        []],
     copy:                   ["copy",            [:source, :target]],
     create:                 ["create",          [:assetPath, :Filedata]],
-    create:                 ["create",          [:Filedata]],
+    #create:                 ["create",          [:Filedata]],
     create_auth_key:        ["create_auth_key", []],
     create_collection:      ["create",          [:assetPath]],
     create_relation:        ["create_relation", []],
@@ -107,14 +107,14 @@ class Elvis
 
   def get_response_using_post(url=nil,options={})
 
-     raise NotLoggedIn unless logged_in?  ||  url.end_with?('login')
+    raise NotLoggedIn unless logged_in?  ||  url.end_with?('login')
 
     response = RestClient.post( url, options, { cookies: @cookies } )
 
-if $DEBUG
-    debug_me(){[:url, :options, :response ]}
-    debug_me(){[ 'response.code', 'response.cookies', 'response.body' ]}
-end
+    if $DEBUG
+        debug_me(){[:url, :options, :response ]}
+        debug_me(){[ 'response.code', 'response.cookies', 'response.body' ]}
+    end
 
     @cookies = response.cookies unless response.cookies.empty?
 
@@ -136,12 +136,12 @@ end
   end
 
 
-  # https://elvis.tenderapp.com/kb/api/rest-copy
-  def copy(options={})
-    Utilities.demand_required_options!( :copy, options )
-    url = base_url + "copy"
-    response = get_response(url, options)
-  end # copy
+  # # https://elvis.tenderapp.com/kb/api/rest-copy
+  # def copy(options={})
+  #   Utilities.demand_required_options!( :copy, options )
+  #   url = base_url + "copy"
+  #   response = get_response(url, options)
+  # end # copy
 
 
   # No file is uploaded.  A placehold asset is created with the
@@ -220,30 +220,30 @@ end
   alias :delete_bulk_ids :remove_bulk_ids
 
 
-  # https://elvis.tenderapp.com/kb/api/rest-update
-  # used to update assets and metadata
-  def update(options={})
-    Utilities.demand_required_options!( :update, options )
-    url = base_url + "update"
-    response = get_response(url, options)
-  end # update
+  # # https://elvis.tenderapp.com/kb/api/rest-update
+  # # used to update assets and metadata
+  # def update(options={})
+  #   Utilities.demand_required_options!( :update, options )
+  #   url = base_url + "update"
+  #   response = get_response(url, options)
+  # end # update
 
-  alias :replace        :update
-  alias :update_asset   :update
-  alias :replace_asset  :update
+  # alias :replace        :update
+  # alias :update_asset   :update
+  # alias :replace_asset  :update
 
 
-  # https://elvis.tenderapp.com/kb/api/rest-update
-  # used to update metadata for a specific asset referenced by 'id'
+  # # https://elvis.tenderapp.com/kb/api/rest-update
+  # # used to update metadata for a specific asset referenced by 'id'
 
-  def update_metadata(options={})
-    Utilities.demand_required_options!( :update, options )
-    options[:metadata] = options[:metadata].to_json
-    url       = base_url + "update"
-    response  = get_response(url, options)
-  end # update
+  # def update_metadata(options={})
+  #   Utilities.demand_required_options!( :update, options )
+  #   options[:metadata] = options[:metadata].to_json
+  #   url       = base_url + "update"
+  #   response  = get_response(url, options)
+  # end # update
 
-  alias :replace_metadata :update_metadata
+  # alias :replace_metadata :update_metadata
 
 
   # https://elvis.tenderapp.com/kb/api/rest-updatebulk
