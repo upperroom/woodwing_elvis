@@ -13,6 +13,8 @@ module WoodWing
 # Elvis is a Digital Asset Manager implemented in Java
 class Elvis
 
+  puts "hello!"
+
   attr_accessor :base_url
   attr_accessor :cookies
 
