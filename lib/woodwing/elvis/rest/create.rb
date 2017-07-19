@@ -66,10 +66,10 @@ module WoodWing
       alias :import_asset :create
 
 
-      def create_folder(path)
-        url = base_url + 'createFolder'
-        get_response(url, {path: path})
-      end
+      # def create_folder(path)
+      #   url = base_url + 'createFolder'
+      #   get_response(url, {path: path})
+      # end
 
 
     end # module Rest
