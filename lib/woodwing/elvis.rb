@@ -4,13 +4,14 @@
 ##  Desc: REST API definitions for WoodWing's Elvis
 #
 
+def require_relative_dir(dir)
+  Dir[File.join(File.dirname(__FILE__), dir, '*.rb')].each {|file| require file}
+end
+
 require_relative_dir 'elvis/utilities'
 require_relative_dir 'elvis/rest'
 require_relative_dir 'elvis/soap'
 
-def require_relative_dir(dir)
-  Dir[File.join(File.dirname(__FILE__), dir, '*.rb')].each {|file| require file}
-end
 
 module WoodWing
 
