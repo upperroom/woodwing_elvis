@@ -168,14 +168,14 @@ module WoodWing
     end # log_usage_stats
 
 
-    # https://elvis.tenderapp.com/kb/api/rest-move
-    def move(options={})
-      Utilities.demand_required_options!( :move, options )
-      url = base_url + "move"
-      response = get_response(url, options)
-    end # move
+    # # https://elvis.tenderapp.com/kb/api/rest-move
+    # def move(options={})
+    #   Utilities.demand_required_options!( :move, options )
+    #   url = base_url + "move"
+    #   response = get_response(url, options)
+    # end # move
 
-    alias :rename :move
+    # alias :rename :move
 
 
     # https://elvis.tenderapp.com/kb/api/rest-profile
