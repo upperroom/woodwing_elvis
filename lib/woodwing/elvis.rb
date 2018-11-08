@@ -59,7 +59,7 @@ class Elvis
                   my_cookies={})
 
     @base_url     = my_base_url
-    @cookies      = my_cookies
+    @auth_token   = ''
 
     @base_url += '/'  unless @base_url.end_with?('/')
 
@@ -70,16 +70,14 @@ class Elvis
 
   def get_response(url=nil,options={})
 
-    raise NotLoggedIn unless logged_in?  ||  url.end_with?('login')
+    raise NotLoggedIn unless logged_in?  ||  url.end_with?('apilogin')
 
-    response = RestClient.get(url, { params: options, cookies: @cookies })
+    response = RestClient.get(url, { params: options, Authorization: "Bearer#{@auth_token}" })
 
-if $DEBUG
-    debug_me(){[:url, :options, :response ]}
-    debug_me(){[ 'response.code', 'response.cookies', 'response.body' ]}
-end
-
-    @cookies = response.cookies unless response.cookies.empty?
+    if $DEBUG
+        debug_me(){[:url, :options, :response ]}
+        debug_me(){[ 'response.code', 'response.cookies', 'response.body' ]}
+    end
 
     response = MultiJson.load(  response.body,
                                 :symbolize_keys => true)
@@ -103,16 +101,14 @@ end
 
   def get_response_using_post(url=nil,options={})
 
-     raise NotLoggedIn unless logged_in?  ||  url.end_with?('login')
+     raise NotLoggedIn unless logged_in?  ||  url.end_with?('apilogin')
 
-    response = RestClient.post( url, options, { cookies: @cookies } )
+    response = RestClient.post( url, options, { Authorization: "Bearer#{@auth_token}" } )
 
-if $DEBUG
-    debug_me(){[:url, :options, :response ]}
-    debug_me(){[ 'response.code', 'response.cookies', 'response.body' ]}
-end
-
-    @cookies = response.cookies unless response.cookies.empty?
+    if $DEBUG
+        debug_me(){[:url, :options, :response ]}
+        debug_me(){[ 'response.code', 'response.cookies', 'response.body' ]}
+    end
 
     response = MultiJson.load(  response.body,
                                 :symbolize_keys => true)
