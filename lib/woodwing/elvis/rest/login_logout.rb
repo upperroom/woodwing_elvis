@@ -9,7 +9,7 @@ module WoodWing
 
       # A successful log in will result in a cookie
       def logged_in?
-        not @cookies.empty?
+        not @auth_token.empty?
       end
 
 
@@ -157,24 +157,19 @@ userProfile   An object with details about the user.
 
       def login(options={})
 
-        raise AlreadyLoggedIn unless @cookies.empty?
+        raise AlreadyLoggedIn unless @auth_token.empty?
 
-        unless options.include?(:cred)
-          options = {
-            username:   ENV['ELVIS_USER'],
-            password:   ENV['ELVIS_PASS']
-            }.merge(options)
-          options[:cred] = UrlSafeBase64.encode64("#{options[:username]}:#{options[:password]}")
-        end
-
-        options.delete(:username)
-        options.delete(:password)
+        options = {
+          username:   ENV['ELVIS_USER'],
+          password:   ENV['ELVIS_PASS']
+        }.merge(options)
 
         options[:clientType]    = 'api_Ruby'
-        options[:returnProfile] = 'true'
 
-        url       = base_url + "login"
-        response  = get_response(url, options)
+        url       = base_url + "apilogin"
+        response  = get_response_using_post(url, options)
+
+        @auth_token = response[:authToken]
 
         return response
 
@@ -239,9 +234,9 @@ http://demo.elvisdam.com/logout
       def logout(options={})
 
         url       = base_url + "logout"
-        response  = get_response(url, options)
+        response  = get_response_using_post(url, options)
 
-        @cookies  = {} if response[:logoutSuccess]
+        @auth_token  = '' if response[:logoutSuccess]
 
         return response
 
