@@ -13,7 +13,7 @@ module WoodWing
       # @return [Hash, String] a hash with the result of the API call, or a string with the contents of the file if it was succesfully downloaded
       def checkout(assetId, options={})
         url = base_url + "checkout/" + assetId
-        response = get_response(url, options)
+        response = get_response_using_post(url, options)
       end # checkout
 
       # Cancel the checkout of an asset.
