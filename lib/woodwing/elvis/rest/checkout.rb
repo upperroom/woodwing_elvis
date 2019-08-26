@@ -24,7 +24,7 @@ module WoodWing
       # @return [Hash] a hash with the result of the API call
       def undo_checkout(assetId)
         url = base_url + "undocheckout/" + assetId
-        response = get_response(url)
+        response = get_response_using_post(url)
       end # undo_checkout
 
       alias :abort_checkout :undo_checkout
