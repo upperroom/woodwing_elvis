@@ -45,17 +45,19 @@ module WoodWing
       #             created asset.
       #             Optional. If omitted, a simple 200 OK status code will be returned
 
-      def create(options={})
+      def create(file, options={})
 
         Utilities.demand_required_options!( :create, options )
 
         # SMELL:  Don't think this is required since last change to
         #         get_response_with_post
-        options.merge!( { multipart: true } )
+        options.merge!({
+          multipart: true,
+          Filedata: file
+        })
 
         url       = base_url + "create"
         response  = get_response_using_post(url, options)
-
       end # create
 
       alias :create_file :create

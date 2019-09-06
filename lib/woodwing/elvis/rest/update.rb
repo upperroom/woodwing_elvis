@@ -11,10 +11,15 @@ module WoodWing
       # @option [File] :Filedata new file
       # @option [Hash] :metadata a hash with metadata to be updated. the keys should be Elvis metadata field names.
       # @options [String] :metadataToReturn comma-delimited list of metadata fields to return in hits
-      def update(id, options)
+      def update(id, file, options={})
+        options.merge!({
+          id: id,
+          multipart: true,
+          Filedata: file
+        })
+
         url = base_url + "update"
-        options.merge!(id: id)
-        get_response_using_post(url, options)
+        response = get_response_using_post(url, options)
       end
 
 
