@@ -14,10 +14,13 @@ module Rest
   require_relative 'rest/checkout'
   require_relative 'rest/create'
   require_relative 'rest/create_elvislink'
+  require_relative 'rest/folders'
   require_relative 'rest/login_logout'
+  require_relative 'rest/move'
   require_relative 'rest/relations'
   require_relative 'rest/search'
   require_relative 'rest/stub'
+  require_relative 'rest/update'
 
 end # module WoodWing::Elvis::Rest
 
