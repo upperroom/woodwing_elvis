@@ -9,7 +9,7 @@ module WoodWing
 
       # A successful log in will result in a cookie
       def logged_in?
-        not @auth_token.empty?
+        not @auth_token.nil? || @auth_token.empty?
       end
 
 
